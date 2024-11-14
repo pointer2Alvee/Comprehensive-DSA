@@ -42,8 +42,7 @@ class SinglyLinkedList:
         """
         Creates an empty SLL with no nodes
         """
-        self.head = None
-        self.tail = None
+        self.head = self.tail =  None
         self.length = 0
     
     
@@ -69,7 +68,7 @@ class SinglyLinkedList:
         """
         new_node = Node(data)
         
-        if self.head == None:
+        if self.head is None:
             self.head = self.tail = new_node  
         else:
             new_node.next = self.head
@@ -77,12 +76,60 @@ class SinglyLinkedList:
         self.length += 1
     
     
+    # (2.2) insert() method
+    def insert(self, data, index):
+        """
+        Inserts node at any given index in the SLL. Edge cases handled
+        """
+        new_node = Node(data)
+        
+        
+        if index < 0 or index > self.length:
+            return False
+        
+        if self.head is None:
+            self.head = self.tail = new_node
+            return
+        else:
+            if index == 0:
+                new_node.next = self.head
+                self.head = new_node
+                
+            elif index == self.length:
+                self.tail.next = new_node
+                new_node.next = None
+                self.tail = new_node
+            
+            else:
+                curr_node = self.head
+                for _ in range(index-1):
+                    curr_node = curr_node.next
+                
+                new_node.next = curr_node.next
+                curr_node.next = new_node
+            
+        self.length += 1
+        return True
+        
+    
     # (2.3) append() method
     def append(self, data):
         """
         Adds a new Node in the end of the SLL. Edge cases handled
         """
-            
+        new_node = Node(data)
+        
+        if self.head is None:
+            self.head = self.tail = new_node
+            return
+        else:
+            self.tail.next = new_node
+            new_node.next = None
+            self.tail = new_node
+        
+        self.length += 1  
+        return True  
+
 
 
 ################## SLL implementations #################
@@ -92,11 +139,27 @@ SLL = SinglyLinkedList()
 # Insert Nodes
 SLL.prepend(23)
 SLL.prepend(45)
-print(SLL)
+print(f"len: {SLL.length}, SLL : {SLL}")
 
+SLL.append(34)
+print(f"len: {SLL.length}, SLL : {SLL}")
 
+print("debug:")
+SLL.insert(81,1)
+print(f"len: {SLL.length}, SLL : {SLL}")
+SLL.insert(66,0)
+SLL.insert(9,5)
+print(f"len: {SLL.length}, SLL : {SLL}")
 
+SLL.append(42)
+print(f"len: {SLL.length}, SLL : {SLL}")
 
+SLL.insert(19,5)
+SLL.append(41)
+SLL.prepend(322)
+print(f"len: {SLL.length}, SLL : {SLL}")
 
+SLL.insert(66,9)
 
+print(f"len: {SLL.length}, SLL : {SLL}")
 
