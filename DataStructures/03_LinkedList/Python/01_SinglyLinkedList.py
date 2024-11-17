@@ -77,7 +77,7 @@ class SinglyLinkedList:
     
     
     # (2.2) insert() method
-    def insert(self, data, index):
+    def insert(self, data, index) -> bool:
         """
         Inserts node at any given index in the SLL. Edge cases handled
         """
@@ -113,7 +113,7 @@ class SinglyLinkedList:
         
     
     # (2.3) append() method
-    def append(self, data):
+    def append(self, data)-> bool:
         """
         Adds a new Node in the end of the SLL. Edge cases handled
         """
@@ -130,21 +130,153 @@ class SinglyLinkedList:
         self.length += 1  
         return True  
 
+    
+    # (3.0) traverse() method
+    def traverse(self):
+        """
+        Traverses all the nodes of the SLL
+        """
+        curr_node = self.head
+        while curr_node:
+            print(curr_node.data)
+            curr_node = curr_node.next
+            
+            
+    # (4.0) search() method
+    def search(self, target)->int:
+        """
+        Searches for a particular node in the SLL. If found Return TRUE or Index of the Node
+        """
+        idx = 0
+        curr_node = self.head
+        while curr_node:
+            if(curr_node.data == target):
+                return idx
+            curr_node = curr_node.next
+            idx += 1
+        return False
 
+
+    # (5.0) get() method
+    def get(self, index) -> Node:
+        """
+        Get the node for the given index
+        """
+        
+        if index < 0 or index >= self.length:
+            return None
+        
+        else:
+            curr_node = self.head
+            for _ in range(index):
+                curr_node = curr_node.next
+            return curr_node
+            
+    
+    # (6.0) set() method
+    def set(self, data, index) -> bool:
+        """
+        Sets Data on the given index by calling get() method, 
+        boundary egde case handled inside get()
+        """
+        curr_node = self.get(index) 
+        if curr_node:
+            curr_node.data = data
+            return True
+        return False
+    
+    
+    # (7.1) pop_first() method
+    def pop_first(self) -> Node:
+        """
+        Pops the first node from the SLL
+        """
+        
+        if self.length == 0:
+            return None
+        
+        popped_node = self.head
+        if self.length == 1:
+            self.head = self.tail = None
+        else:
+            self.head = popped_node.next
+            popped_node.next = None
+            
+        self.length -=1 
+        return popped_node
+    
+    
+    # (7.2) pop() method
+    def pop(self) -> Node:
+        """
+        Pops the last node from the SLL
+        """    
+        
+        if self.length == 0:
+            return None
+        
+        popped_node = self.tail
+        if self.length == 1:
+            self.head = self.tail = None
+        else:
+            curr_node = self.head
+            while curr_node.next is not self.tail:
+                curr_node = curr_node.next
+            
+            curr_node.next = None
+            self.tail = curr_node
+        
+        self.length -= 1
+        return popped_node 
+        
+        
+    # (7.3) remove() methodd
+    def remove(self, index) -> Node:
+        """
+        To remove any particualt Node in the SLLL
+        """
+        
+        if index < 0 or index >= self.length:
+            return None
+        
+        if index == 0:
+            return self.pop_first()
+        elif index == self.length-1:
+            return self.pop()
+        else:
+            curr_node = self.get(index-1) # get prev_node of the to be popped_node
+            popped_node = curr_node.next
+            curr_node.next = popped_node.next
+            popped_node.next = None
+            self.length -= 1
+            return popped_node 
+        
+    # (7.4) delete() method
+    def delete(self) -> bool:
+        """
+        Deletes the entire SLL
+        """
+        self.head = self.tail = None
+        self.length = 0
+        return True
 
 ################## SLL implementations #################
 ########################################################
 SLL = SinglyLinkedList()
-
+print("starts here:")
 # Insert Nodes
+print(f"len: {SLL.length}, SLL : {SLL}")
+
 SLL.prepend(23)
+print(f"len: {SLL.length}, SLL : {SLL}")
+
 SLL.prepend(45)
 print(f"len: {SLL.length}, SLL : {SLL}")
 
 SLL.append(34)
 print(f"len: {SLL.length}, SLL : {SLL}")
 
-print("debug:")
+#print("debug:")
 SLL.insert(81,1)
 print(f"len: {SLL.length}, SLL : {SLL}")
 SLL.insert(66,0)
@@ -161,5 +293,36 @@ print(f"len: {SLL.length}, SLL : {SLL}")
 
 SLL.insert(66,9)
 
+print(f"len: {SLL.length}, SLL : {SLL}")
+
+print(f"(3.0) Traversing :")
+#SLL.traverse()
+
+
+print(f"(4.0) Searching :")
+print(f"item at idx : {SLL.search(9)}")
+
+print(f"(5.0) get :")
+print(f"item is : {SLL.get(4).data}")
+
+print(f"(6.0) set :")
+print(f"item set : {SLL.set(555,5)}")
+print(f"len: {SLL.length}, SLL : {SLL}")
+
+print(f"(7.1) pop_first() :")
+print(f"item popped : {SLL.pop_first().data}")
+print(f"len: {SLL.length}, SLL : {SLL}")
+
+print(f"(7.2) pop() :")
+print(f"item popped : {SLL.pop().data}")
+print(f"len: {SLL.length}, SLL : {SLL}")
+
+print(f"(7.3) remove() :")
+print(f"item popped : {SLL.remove(3).data}")
+print(f"len: {SLL.length}, SLL : {SLL}")
+
+
+print(f"(7.4) delete() :")
+print(f"SLL deleted? : {SLL.delete()}")
 print(f"len: {SLL.length}, SLL : {SLL}")
 
