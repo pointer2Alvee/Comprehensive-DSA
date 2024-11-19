@@ -277,7 +277,7 @@ class QueueThree:
         if self.is_empty():
             return False
         else:
-            dequeued_item = self.queue.head.data
+            dequeued_item = self.queue.head
             if self.queue.head == self.queue.tail:
                 self.queue.head = self.queue.tail = None
             else:
