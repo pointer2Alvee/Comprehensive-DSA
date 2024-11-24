@@ -55,10 +55,60 @@ class Graph:
     # (4) remove_edge()
     def remove_edge(self, vertex_one, vertex_two):
         if (vertex_one,vertex_two) in self.adjacency_list.keys():
-            self.adjacency_list[vertex_one].remove(vertex_two)
-            self.adjacency_list[vertex_two].remove(vertex_one)
+            try:
+                self.adjacency_list[vertex_one].remove(vertex_two)
+                self.adjacency_list[vertex_two].remove(vertex_one)
+            except ValueError:
+                pass
             return True
         return False
             
-        
             
+    # (5) remove_vertex()
+    def remove_vertex(self, vertex):
+        
+        if vertex in self.adjacency_list.keys():
+            for edge in self.adjacency_list[vertex]:
+                self.adjacency_list[edge].remove(vertex)
+            del self.adjacency_list[vertex]
+            return True
+            
+        return False
+    
+    
+    # (6) bfs
+    def bfs(self,starting_vertex):
+        
+        visited_vertices = set()
+        visited_vertices.add(starting_vertex)
+        
+        queue = deque([starting_vertex])
+        
+        while queue:
+            curr_vertex = queue.popleft()
+            print(f"{curr_vertex} ", sep="-", end="")
+            
+            for adjacent_vertex in self.adjacency_list[curr_vertex]:
+                if adjacent_vertex not in visited_vertices:
+                    visited_vertices.add(adjacent_vertex)
+                    queue.append(adjacent_vertex)
+                    
+
+gph = Graph()
+gph.add_vertex("A")
+gph.add_vertex("B")
+gph.add_vertex("C")
+gph.add_vertex("D")
+gph.add_vertex("E")
+
+gph.add_edge("A", "B")
+gph.add_edge("A", "C")
+
+gph.add_edge("C", "D")
+gph.add_edge("B", "E")
+
+gph.add_edge("D", "E")
+
+gph.print_graph()
+print("\nbfs:")
+gph.bfs("A")
