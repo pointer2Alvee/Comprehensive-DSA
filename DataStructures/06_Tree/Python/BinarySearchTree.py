@@ -66,7 +66,24 @@ def search(root_node, target) -> bool:
         
 # (4.0) insert()
 def insert(root_node, value):
-   pass
+    if not root_node:
+       root_node.data = value
+       
+    elif value <= root_node.data :
+       if (root_node.left_child is None):
+           root_node.left_child = BSTNode(value)
+       else:
+           insert(root_node.left_child,value)
+    elif value > root_node.data:
+        if (root_node.right_child is None):
+             root_node.right_child = BSTNode(value)
+        else:
+            insert(root_node.right_child, value)
+   
+    return True
+   
+   
+   
                 
 # (5.0) delete()
 
@@ -112,6 +129,12 @@ def delete(root_node, target):
     return root_node
 
 
+# delete bst
+def delete_bst(root_node):
+    if not root_node:
+        return False
+    else:
+        root_node.left_child = root_node.right_child = root_node.data = None
 ################## Binary Search Tree implementations ##############
 ####################################################################
 # Creating Tree
@@ -141,10 +164,16 @@ nd3.left_child = nd7
 print("Search() : ")
 print(f"node present ? : {search(bst, 30)}")
 
-print("insert() : ")
-print(f"insert Node ? : {insert(bst, 45)}")
 levelorder_traversal(bst)
 
 print(f"\n_get_min_node() : {_get_min_node(bst).data}")
 print(f"\ndelete() : {delete(bst, 60)}")
+levelorder_traversal(bst)
+
+print(f"\ninsert() : {insert(bst, 60)}")
+print()
+levelorder_traversal(bst)
+
+
+print(f"\ndelete_bst() : {delete_bst(bst)}")
 levelorder_traversal(bst)
