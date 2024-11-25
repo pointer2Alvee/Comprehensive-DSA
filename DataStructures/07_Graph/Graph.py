@@ -20,7 +20,7 @@ All three have the following operations :
 ############### Graph ###############
 from collections import deque 
 
-
+# (1) Creating Graph Class
 class Graph:
     def __init__(self, adjacency_list=None) -> None:
         if not adjacency_list:
@@ -110,6 +110,8 @@ class Graph:
             for adjacent_vertex in self.adjacency_list[curr_vertex]:
                 if adjacent_vertex not in visited_vertices:
                     stack.append(adjacent_vertex)        
+                    
+################# IMPLEMENTING GRAPH ###################
 
 gph = Graph()
 gph.add_vertex("A")
