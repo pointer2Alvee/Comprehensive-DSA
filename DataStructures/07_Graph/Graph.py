@@ -76,7 +76,7 @@ class Graph:
         return False
     
     
-    # (6) bfs
+    # (6.1) bfs
     def bfs(self,starting_vertex):
         
         visited_vertices = set()
@@ -92,7 +92,24 @@ class Graph:
                 if adjacent_vertex not in visited_vertices:
                     visited_vertices.add(adjacent_vertex)
                     queue.append(adjacent_vertex)
-                    
+    
+    
+    # (6.2) dfs
+    def dfs(self, starting_vertex):
+        
+        visited_vertices = set()
+        stack = [starting_vertex]
+        
+        while stack:
+            curr_vertex = stack.pop()
+            
+            if curr_vertex not in visited_vertices:
+                visited_vertices.add(curr_vertex)
+                print(f"{curr_vertex} ", sep="", end="")
+            
+            for adjacent_vertex in self.adjacency_list[curr_vertex]:
+                if adjacent_vertex not in visited_vertices:
+                    stack.append(adjacent_vertex)        
 
 gph = Graph()
 gph.add_vertex("A")
@@ -112,3 +129,6 @@ gph.add_edge("D", "E")
 gph.print_graph()
 print("\nbfs:")
 gph.bfs("A")
+
+print("\ndfs:")
+gph.dfs("A")
